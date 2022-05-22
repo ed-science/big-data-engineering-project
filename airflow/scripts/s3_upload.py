@@ -18,7 +18,7 @@ print('client')
 
 transfer = S3Transfer(client)
 
-print('transfer - ' + s3_bucket_name)
+print(f'transfer - {s3_bucket_name}')
 
 # Define function to scan through the Spark output uploadDirectory,
 # identify csv files, and upload them to the S3 bucket
@@ -27,8 +27,10 @@ def uploadDirectory(filepath, s3_bucket_name):
         for file in files:
             # Transfer only csv files
             if file.endswith('csv'):
-                transfer.upload_file(os.path.join(root, file),
-                                     s3_bucket_name,
-                                     "Clean_Data/" + file) # File put into Clean-Data folder
+                transfer.upload_file(
+                    os.path.join(root, file),
+                    s3_bucket_name,
+                    f"Clean_Data/{file}",
+                )
 
 uploadDirectory(filepath = filepath, s3_bucket_name = s3_bucket_name)
